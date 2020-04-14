@@ -4,6 +4,11 @@ package com.javarush.task.task19.task1918;
 Знакомство с тегами
 */
 
+import org.jsoup.*;
+import org.jsoup.nodes.*;
+import org.jsoup.parser.Parser;
+import org.jsoup.select.Elements;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -15,32 +20,34 @@ public class Solution {
         String file = rd.readLine();
         rd.close();
 
-//        ArrayList<String> list = new ArrayList<>();
-        StringBuilder string = new StringBuilder("");
         rd = new BufferedReader(new FileReader(file));
+        StringBuilder string = new StringBuilder("");
         while (rd.ready()) {
-//            list.add(rd.readLine());
             string.append(rd.readLine());
         }
         rd.close();
 
-        String key = args[0];
-        String patternFirst = "<" + key + " [a-zA-Z:=\"\\s><\\n]+<\\/" + key + ">";
-        String patternSecond ="<" + key + ">[a-zA-Z\\s]+<\\/" + key + ">";
-
-//        for (String line : list) {
-
-            Pattern pat = Pattern.compile(patternFirst);
-            Matcher mat = pat.matcher(string);
-            while (mat.find()) {
-                System.out.println(mat.group());
-            }
-            pat = Pattern.compile(patternSecond);
-            mat = pat.matcher(string);
-            while (mat.find()) {
-                System.out.println(mat.group());
-            }
+//        String patternFirst = "<" + key + " [a-zA-Z:=\"\\s><\\n]+<\\/" + key + ">";
+//        String patternSecond = "<" + key + ">[a-zA-Z\\s]+<\\/" + key + ">";
+//
+//
+//        Pattern pat = Pattern.compile(patternFirst);
+//        Matcher mat = pat.matcher(string);
+//        while (mat.find()) {
+//            System.out.println(mat.group());
+//        }
+//        pat = Pattern.compile(patternSecond);
+//        mat = pat.matcher(string);
+//        while (mat.find()) {
+//            System.out.println(mat.group());
 //        }
 
+        Document doc = Jsoup.parse(string.toString()," ", Parser.xmlParser());
+
+        Elements els = doc.getElementsByTag(args[0]);
+
+        for (Element el : els) {
+            System.out.println(el.toString());
+        }
     }
 }
