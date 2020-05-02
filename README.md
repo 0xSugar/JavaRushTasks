@@ -1,1 +1,1 @@
-Some of tasks that I do during learning Java on JavaRush. Not all of them... for now I did 500+ task, but mainly they are simple.
+Some of tasks I do during learning Java on JavaRush. Not all of them... for now I've done 500+ tasks of which about 200 weren't so simple
