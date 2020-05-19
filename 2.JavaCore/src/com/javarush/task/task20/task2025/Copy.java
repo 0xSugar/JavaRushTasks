@@ -4,22 +4,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-/*
-Алгоритмы-числа
-*/
+/**
+ * Неправильное условие
+ */
 public class Copy {
 
     private static int[][] cash;
     private static ArrayList<Long> list = new ArrayList<>();
 
-    private static long[] getNumbers(long N) {
-        long[] result = null;
-        cash = new int[10][(int) N + 1];
+    static {                            // заполнения матрицы чисел в виде таблицы умножения
+        cash = new int[10][10];         // что бы каждый раз высчитывать, а брать от сюда
         for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < (int) N + 1; j++) {
+            for (int j = 0; j < 10; j++) {
                 cash[i][j] = (int) (Math.pow(i, j));
             }
         }
+    }
+
+    private static long[] getNumbers(long N) {
+        long[] result;
+
         cycle((int) N);
 
         result = new long[list.size()];
@@ -29,6 +33,7 @@ public class Copy {
 
 
         Arrays.sort(result);
+        System.out.println(result.length);
         return result;
     }
 
@@ -55,20 +60,20 @@ public class Copy {
     }
 
     private static void search(int start, int end, int numb) {
-        for (; start < end; start++) {
-            int[] arr = new int[numb];
-            String fullNumber = String.valueOf(start);
+        main: for (; start < end; start++) {                  // сначала нужно целое число разделить на цифры 213 -> 2, 1 и 3
+            int[] arr = new int[numb];                  // массив, где будут числа
+            String fullNumber = String.valueOf(start);  // текстовый вид числа
 
-            for (int i = 0; i < numb; i++) {
-                arr[i] = fullNumber.charAt(i) - '0';
+            for (int i = 0; i < numb; i++) {                // по каждому символу, берем 1й символ и отнимаем
+                arr[i] = fullNumber.charAt(i) - '0';        // текстовый 0, что бы символ перевести в число
             }
 
-//            if (!isOkay(arr, numb)) continue; - работает 1долго и 2неправильно
 
             int fin = 0;
-            for (int i = 0; i < arr.length; i++) {
-                fin += cash[arr[i]][numb];
-            }
+            for (int i = 0; i < arr.length; i++) {          // теперь получаем число, при возведении в степень из длины
+                fin += cash[arr[i]][numb];                  // кажой цифры
+            }                                       // (3 для 213, 5 для 92401)
+
             if (fin == start) {
                 list.add((long) start);
             }
@@ -86,7 +91,7 @@ public class Copy {
         return true;
     }
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -100,8 +105,8 @@ public class Copy {
                 }
             }
         });
+        thread.setDaemon(true);
         thread.start();
         System.out.println(Arrays.toString(getNumbers(9)));
-        thread.interrupt();
     }
 }

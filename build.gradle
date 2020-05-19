@@ -23,4 +23,7 @@ dependencies {
     compile group: 'commons-cli', name: 'commons-cli', version: '1.4'               // Commons CLI
     //FastJson
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.62'
+    // JSoup https://mvnrepository.com/artifact/org.jsoup/jsoup
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
+
 }

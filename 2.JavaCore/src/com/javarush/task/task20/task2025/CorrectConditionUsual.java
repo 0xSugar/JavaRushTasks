@@ -5,7 +5,7 @@ import java.util.*;
 /*
 Алгоритмы-числа
 */
-public class Solution {
+public class CorrectConditionUsual {
     private static ArrayList<Long> list = new ArrayList<>();
     private static int[][] buffer;
 
@@ -26,7 +26,7 @@ public class Solution {
         thread.setDaemon(true);
         thread.start();
 
-        System.out.println(Arrays.toString(getNumbers(1_000_000_000L)));
+        System.out.println(Arrays.toString(getNumbers(912985153L)));
     }
 
     public static long[] getNumbers(long N) throws InterruptedException {

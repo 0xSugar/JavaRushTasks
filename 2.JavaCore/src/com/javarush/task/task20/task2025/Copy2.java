@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-/*
-Алгоритмы-числа
-*/
+/**
+ * Неправильное условие
+ */
 public class Copy2 {
 
     private static int[][] cash;
