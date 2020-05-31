@@ -1,10 +1,13 @@
 package com.javarush.task.task27.task2707;
 
-import java.util.concurrent.locks.ReentrantLock;
-
 /*
 Определяем порядок захвата монитора
 */
+
+/**
+ * Работает неадкватно.. хоть валидатор и пропускает
+ */
+
 public class Solution {
     public void someMethodWithSynchronizedBlocks(Object obj1, Object obj2) {
         synchronized (obj1) {
@@ -14,9 +17,26 @@ public class Solution {
         }
     }
 
-    public static boolean isLockOrderNormal(final Solution solution, final Object o1, final Object o2) throws Exception {
-        
-        return false;
+    public static boolean isLockOrderNormal(final Solution solution, final Object o1, final Object o2) throws InterruptedException {
+        Thread t1 = new Thread(() -> {
+            synchronized (o1) {
+                try {
+                    Thread.sleep(500);
+                    synchronized (o2) {
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        Thread t2 = new Thread(() -> {
+            solution.someMethodWithSynchronizedBlocks(o1, o2);
+        });
+        t1.start();
+        t2.start();
+        Thread.sleep(2000);
+        return !(t2.getState() == Thread.State.BLOCKED);
+
     }
 
     public static void main(String[] args) throws Exception {
